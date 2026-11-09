@@ -1,0 +1,18 @@
+name: checks
+# The gate. Runs the exact same script as the local pre-push hook, so a green
+# push means a green CI. Runs on every branch + PR (not just master).
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    name: Run shared checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v5
+      - name: Run shared check script
+        run: ./scripts/check.sh
